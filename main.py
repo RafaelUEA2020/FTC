@@ -1,16 +1,15 @@
-#Rafael Santos e Gustavo Almada
+# Rafael Santos e Gustavo Almada
 # Constantes and global variables
 TAG = '#'
 SIGMA = 'I'
 MARK = 'x'
-CURSOR = '>'
 WHITE = 'b'
 ACEITA = 'ACEITA'
 REJEITA = 'REJEITA'
 tape2 = ''
 tape1 = ''
-head1 = 0  # cabeçote da fita 1
-head2 = 0  # cabeçote da fita 2
+head1 = 1  # cabeçote da fita 1
+head2 = 1  # cabeçote da fita 2
 list1 = []
 list2 = []
 
@@ -21,9 +20,12 @@ def printtapes():
 
 def q0():
     global list1, list2, head1, head2
-    head1 += 1
-    head2 += 1
-    q1()
+    if list1[head1] == TAG:
+        print(REJEITA)
+    else:
+        head1 += 1
+        head2 += 1
+        q1()
 
 def q1():
     global list1, list2, head1, head2
@@ -34,11 +36,12 @@ def q1():
             break
         head1 += 1
         head2 += 1
+
 def q2():
     global list1, list2, head1, head2
     while True:
         if list1[head1] == WHITE:
-            head1 -= 1
+            head1 = head1 - 1
             q3()
             break
         head1 += 1
@@ -48,20 +51,22 @@ def q3():
     global list1, list2, head1, head2
     while True:
         if list1[head1] == TAG:
-            head1 -= 1
+            head1 = head1 - 1
             q18()
             break
-        head1 -= 1
+        head1 = head1 - 1
 
 def q18():
     global list1, list2, head1, head2
     if list1[head1] == SIGMA:
         head1 += 1
         q16()
-    elif list1[head1] == TAG:
+    elif list1[head1] == MARK:
         head1 += 1
         q17()
-    else:
+    elif list1[head1] == TAG:
+        print(list1[head1])
+        print(head1)
         print(REJEITA)
 
 def q17():
@@ -261,9 +266,10 @@ def q19():
         head1 += 1
 
 def main():
-    global tape1, tape2
+    global tape1, tape2, list1, list2, head1, head2
     tape1 = input('').upper()
     tape1 = 'b' + tape1 + 'b'  # a letra b representa o branco na fita
+    print(tape1)
     tape2 = tape1
     for x in tape1:
         list1.append(x)
@@ -274,5 +280,5 @@ def main():
     else:
         q0()
 
-main()
 
+main()
